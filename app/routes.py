@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, redirect, url_for
 from flask import request
 
 
@@ -20,4 +20,4 @@ def login ():
 def autenticar ():
     usuario = request.args.get('usuario')
     senha = request.args.get('senha')
-    return f'usuario: {usuario} senha:{senha}'         
+    return redirect(url_for('index', nome=usuario))

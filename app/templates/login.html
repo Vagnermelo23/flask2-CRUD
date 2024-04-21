@@ -3,10 +3,10 @@
 {% block conteudo %}
         <form action="/autenticar">
             usuario: <input type="text" name="usuario"><br>
-            senha :  <input type="text" name = "senha"><br>
+            senha :  <input type="password" name = "senha"><br>
             <button type="submit" > Entrar </button>
 
-
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo2.css') }}">
         </form>
             
 

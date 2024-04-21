@@ -10,4 +10,5 @@ img {
     height: auto; /* Hace que la altura de la imagen se ajuste automáticamente para mantener la proporción de aspecto */
     display: block; /* Evita que la imagen tenga espacios en blanco debajo */
     margin-top: 20px; /* Espacio superior entre el título y la imagen */
+    
 }
