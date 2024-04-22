@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+    <form action="/autenticar1" method="post">
+        usuario: <input type="text" name="usuario1">
+        senha: <input type="password" name="senha1">
+        <button type="submit">Registrar</button>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo3.css') }}">
+    </form>
+{% endblock %}
