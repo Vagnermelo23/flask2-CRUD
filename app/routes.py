@@ -2,15 +2,18 @@ from app import app
 from flask import render_template, redirect, url_for
 from flask import request
 import mysql.connector
+import os
+import mysql.connector
+
 
 mydb = mysql.connector.connect(
-    host='roundhouse.proxy.rlwy.net',
-    user='root',
-    port = 17621,
-    password='cgQhbverGkTlOQYLJnTlTgoItjBExyAd',
-    database='db'
+        host=os.environ.get('DB_HOST'),
+        user=os.environ.get('DB_USER'),
+        port=int(os.environ.get('DB_PORT' )),  # Porta padrão é 3306, mas pode ser substituída pela variável de ambiente
+        password=os.environ.get('DB_PASSWORD'),
+        database=os.environ.get('DB_DATABASE')
 )
-
+    
 
 @app.route('/')
 def index_default():
