@@ -6,6 +6,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
     host='roundhouse.proxy.rlwy.net',
     user='root',
+    port = 17621,
     password='cgQhbverGkTlOQYLJnTlTgoItjBExyAd',
     database='db'
 )
@@ -52,6 +53,7 @@ def autenticar1():
     mydb.commit()
     cursor.close()
     return redirect(url_for('registrado', usuario1=usuario1))
+
 
 @app.route('/registrado')
 def registrado():
