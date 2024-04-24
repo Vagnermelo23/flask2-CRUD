@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-        <form action="/autenticar">
-            usuario: <input type="text" name="usuario"><br>
-            senha :  <input type="password" name = "senha"><br>
-            <button type="submit" > Entrar </button>
+    <form action="/autenticar" method="post">
+        Usuário: <input type="text" name="usuario"><br>
+        Senha: <input type="password" name="senha"><br>
+        <button type="submit">Entrar</button>
+    </form>
 
-            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo2.css') }}">
-        </form>
-            
-
-{%endblock%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo2.css') }}">
+{% endblock %}

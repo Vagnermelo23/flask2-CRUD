@@ -1,8 +1,15 @@
 from app import app
 from flask import render_template, redirect, url_for
 from flask import request
+import mysql.connector
 
-lista = []
+mydb = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='',
+    database='bd'
+)
+
 
 @app.route('/')
 def index_default():
@@ -17,12 +24,18 @@ def index(nome):
 def login ():
     return render_template('login.html')
 
-@app.route ('/autenticar', methods=['GET'])
+@app.route ('/autenticar', methods=['POST'])
 def autenticar ():
-    usuario = request.args.get('usuario')
-    senha = request.args.get('senha')
-    return redirect(url_for('index', nome=usuario))
-
+    usuario = request.form['usuario']
+    senha = request.form['senha']
+    cursor = mydb.cursor()
+    cursor.execute("SELECT nome FROM cadastro WHERE nome = %s AND senha = %s", (usuario, senha))
+    usuario_autenticado = cursor.fetchone()
+    cursor.close()
+    if usuario_autenticado:
+        return redirect(url_for('index', nome=usuario))
+    else:
+        return render_template('alerta.html', erro="Credenciais inválidas. Tente novamente.")
 
 
 @app.route('/registrar')
@@ -34,9 +47,17 @@ def registrar():
 def autenticar1():
     usuario1 = request.form.get('usuario1')
     senha1 = request.form.get('senha1')
+    cursor = mydb.cursor()
+    cursor.execute("INSERT INTO cadastro (nome, senha) VALUES (%s, %s)", (usuario1, senha1))
+    mydb.commit()
+    cursor.close()
     return redirect(url_for('registrado', usuario1=usuario1))
 
 @app.route('/registrado')
-def registrado ():
-    usuario1 = request.args.get('usuario1')
+def registrado():
+    cursor = mydb.cursor()
+    cursor.execute("SELECT nome FROM cadastro ORDER BY id DESC LIMIT 1")
+    usuario1 = cursor.fetchone()
+    cursor.close()
     return render_template('registrado.html', usuario1=usuario1)
+
