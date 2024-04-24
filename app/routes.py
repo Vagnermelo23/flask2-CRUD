@@ -4,10 +4,10 @@ from flask import request
 import mysql.connector
 
 mydb = mysql.connector.connect(
-    host='localhost',
+    host='roundhouse.proxy.rlwy.net',
     user='root',
-    password='',
-    database='bd'
+    password='cgQhbverGkTlOQYLJnTlTgoItjBExyAd',
+    database='db'
 )
 
 
