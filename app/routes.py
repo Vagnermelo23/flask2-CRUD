@@ -3,15 +3,15 @@ from flask import render_template, redirect, url_for
 from flask import request
 import mysql.connector
 import os
-import mysql.connector
+
 
 
 mydb = mysql.connector.connect(
-        host=os.environ.get('DB_HOST'),
-        user=os.environ.get('DB_USER'),
-        port=int(os.environ.get('DB_PORT' )),  # Porta padrão é 3306, mas pode ser substituída pela variável de ambiente
-        password=os.environ.get('DB_PASSWORD'),
-        database=os.environ.get('DB_DATABASE')
+        host=os.environ.get('DB_HOST', 'localhost' ),
+        user=os.environ.get('DB_USER', 'root'),
+        port=int(os.environ.get('DB_PORT', 3306 )),  # Porta padrão é 3306, mas pode ser substituída pela variável de ambiente
+        password=os.environ.get('DB_PASSWORD', ''),
+        database=os.environ.get('DB_DATABASE', 'bd')
 )
     
 
@@ -66,3 +66,23 @@ def registrado():
     cursor.close()
     return render_template('registrado.html', usuario1=usuario1)
 
+@app.route('/deletar')
+def deletar():
+    return render_template('deletar.html')
+
+@app.route('/deletado', methods = ['POST'])
+def deletado():
+    usuario3 = request.form.get('usuario3') 
+    senha3 = request.form.get('senha3')
+
+    cursor = mydb.cursor()
+
+    
+    sql = "DELETE FROM cadastro WHERE nome = %s AND senha = %s LIMIT 1"
+    values = (usuario3, senha3)
+
+    cursor.execute(sql, values)
+    mydb.commit()
+    cursor.close()
+
+    return "Deletado com sucesso"

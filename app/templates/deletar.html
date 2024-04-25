@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+    <form action="/deletado" method="post">
+        Usuário: <input type="text" name="usuario3"><br>
+        Senha: <input type="password" name="senha3"><br>
+        <button type="submit">deletar</button>
+    </form>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='estilo4.css') }}">
+{% endblock %}
