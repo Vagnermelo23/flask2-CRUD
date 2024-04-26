@@ -1,14 +1,51 @@
-/* Estilos para el título */
-h2 {
-    color: #333; /* Color del texto */
-    font-size: 24px; /* Tamaño del texto */
+/* estilo.css */
+
+/* Estilos para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
 }
 
-/* Estilos para la imagen */
+/* Estilos para o cabeçalho */
+h2 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Estilos para os links de navegação */
+a {
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    padding: 8px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+    width: 100px;
+}
+
+a:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para o parágrafo */
+p {
+    text-align: center;
+}
+
+/* Estilos para a imagem */
 img {
-    max-width: 100%; /* Asegura que la imagen no se extienda más allá de su contenedor */
-    height: auto; /* Hace que la altura de la imagen se ajuste automáticamente para mantener la proporción de aspecto */
-    display: block; /* Evita que la imagen tenga espacios en blanco debajo */
-    margin-top: 20px; /* Espacio superior entre el título y la imagen */
-    
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+}
+
+/* Estilos para o rodapé */
+footer {
+    text-align: center;
+    margin-top: 20px;
 }
