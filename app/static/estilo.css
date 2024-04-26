@@ -3,14 +3,14 @@
 /* Estilos para o corpo da página */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color:#51c2b3;
     margin: 0;
     padding: 0;
 }
 
 /* Estilos para o cabeçalho */
 h2 {
-    color: #333;
+    color: #000000;
     text-align: center;
     margin-top: 20px;
 }
