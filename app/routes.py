@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from flask import request
 import mysql.connector
 import os
@@ -70,19 +70,21 @@ def registrado():
 def deletar():
     return render_template('deletar.html')
 
-@app.route('/deletado', methods = ['POST'])
+@app.route('/deletado', methods=['POST'])
 def deletado():
-    usuario3 = request.form.get('usuario3') 
+    usuario3 = request.form.get('usuario3')
     senha3 = request.form.get('senha3')
 
     cursor = mydb.cursor()
 
-    
     sql = "DELETE FROM cadastro WHERE nome = %s AND senha = %s LIMIT 1"
     values = (usuario3, senha3)
 
     cursor.execute(sql, values)
     mydb.commit()
-    cursor.close()
 
-    return "Deletado com sucesso"
+    if cursor.rowcount > 0:  # Verifica se a linha foi afetada pela exclusão
+        return f"Usuário: {usuario3} deletado com sucesso"
+    else:
+        flash("Conta inexistente")
+        return redirect('/deletar')
