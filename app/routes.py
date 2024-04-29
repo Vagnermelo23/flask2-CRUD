@@ -70,6 +70,8 @@ def registrado():
 def deletar():
     return render_template('deletar.html')
 
+
+
 @app.route('/deletado', methods=['POST'])
 def deletado():
     usuario3 = request.form.get('usuario3')
@@ -88,3 +90,47 @@ def deletado():
     else:
         flash("Conta inexistente")
         return redirect('/deletar')
+
+
+@app.route('/atualizar')
+def atualizar():
+    return render_template('atualizar.html')
+
+@app.route('/verificar', methods=['POST'])
+def verificar():
+    usuario4 = request.form['usuario4']
+    senha4 = request.form['senha4']
+    cursor = mydb.cursor()
+
+    
+    cursor.execute("SELECT nome FROM cadastro WHERE nome = %s AND senha = %s", (usuario4, senha4))
+    usuario_existente = cursor.fetchone()
+
+    cursor.close()
+
+    if usuario_existente:
+       
+        return redirect(url_for('atualizar2'))
+    else:
+       
+        flash("Usuário não encontrado. Por favor, verifique o nome de usuário e senha.")
+        return redirect(url_for('atualizar'))
+
+@app.route('/atualizar2')
+def atualizar2 ():
+    return render_template('atualizar2.html')
+
+
+@app.route('/atualizado', methods=['POST'])
+def atualizado():
+    usuario5 = request.form['usuario5']
+    senha5 = request.form['senha5']
+    cursor = mydb.cursor()
+
+    
+    cursor.execute("UPDATE cadastro SET senha = %s WHERE nome = %s", (senha5, usuario5))
+    mydb.commit()
+    cursor.close()
+
+    flash(f"Senha do usuário {usuario5} alterada com sucesso")
+    return redirect(url_for('atualizar'))
