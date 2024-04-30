@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, redirect, url_for, flash, session, request
+from flask import render_template, redirect, url_for, flash, request
 import mysql.connector
 import os
 
@@ -86,35 +86,21 @@ def atualizar():
 def verificar():
     usuario4 = request.form['usuario4']
     senha4 = request.form['senha4']
+    usuario5 = request.form['usuario5']
+    senha5 = request.form['senha5']
+    
     cursor = mydb.cursor()
-    cursor.execute("SELECT nome FROM cadastro WHERE nome = %s AND senha = %s", (usuario4, senha4))
-    usuario_existente = cursor.fetchone()  # Busca apenas um resultado
-    cursor.close()  # Movido o fechamento do cursor após ler o resultado
-    if usuario_existente:
-        session['usuario_autenticado'] = usuario4
-        return redirect(url_for('atualizar2'))
-    else:
-        flash("Usuário não encontrado. Por favor, verifique o nome de usuário e senha.")
-        return redirect(url_for('atualizar'))
+    
+    # Update the 'nome' and 'senha' columns where nome = usuario4 and senha = senha4
+    cursor.execute("UPDATE cadastro SET nome = %s, senha = %s WHERE nome = %s AND senha = %s LIMIT 1", (usuario5, senha5, usuario4, senha4))
 
+    # Commit the changes to the database
+    mydb.commit()
 
-@app.route('/atualizar2')
-def atualizar2():
-    return render_template('atualizar2.html')
+    cursor.close()
 
-@app.route('/atualizado', methods=['POST'])
+    return redirect(url_for('atualizado'))
+
+@app.route('/atualizado')
 def atualizado():
-    if 'usuario_autenticado' in session:
-        usuario = session.get('usuario_autenticado')  # Corrigido para acessar a chave correta da sessão
-        senha5 = request.form.get('senha5')  # Obtém a nova senha do formulário
-        usuario5= request.form.get('usuario5')  # Obtém o novo nome do formulário
-        cursor = mydb.cursor()
-        cursor.execute("UPDATE cadastro SET nome = %s, senha = %s WHERE nome = %s", (usuario, senha5, usuario5))  # Corrigido para atualizar o nome de usuário
-        mydb.commit()
-        cursor.close()
-        flash(f"Nome e senha do usuário {usuario5} alterados com sucesso")
-        session.pop('usuario_autenticado')
-        return redirect(url_for('atualizar'))
-    else:
-        flash('Faça login primeiro.')
-        return redirect(url_for('atualizar'))
+    return render_template('atualizado.html')
